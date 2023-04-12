@@ -667,20 +667,20 @@ class ROSWrapperNodelet : public nodelet::Nodelet {
   }
 
   void publishOthers(const Stream &stream) {
-    if ((getStreamSubscribers(stream) > 0 && !is_published_[stream]) ||
-        mono_publishers_[stream].getNumSubscribers() > 0) {
-      api_->EnableStreamData(stream);
-      api_->SetStreamCallback(
-          stream, [this, stream](const api::StreamData &data) {
-            ros::Time stamp = checkUpTimeStamp(
-                data.img->timestamp, stream);
-            static std::size_t count = 0;
-            ++count;
-            publishData(stream, data, count, stamp);
-          });
-      is_published_[stream] = true;
-      return;
-    }
+    // if ((getStreamSubscribers(stream) > 0 && !is_published_[stream]) ||
+    //     mono_publishers_[stream].getNumSubscribers() > 0) {
+    //   api_->EnableStreamData(stream);
+    //   api_->SetStreamCallback(
+    //       stream, [this, stream](const api::StreamData &data) {
+    //         ros::Time stamp = checkUpTimeStamp(
+    //             data.img->timestamp, stream);
+    //         static std::size_t count = 0;
+    //         ++count;
+    //         publishData(stream, data, count, stamp);
+    //       });
+    //   is_published_[stream] = true;
+    //   return;
+    // }
 
     int disable_tag = 0;
     api_->DisableStreamData(stream, [&](const Stream &stream) {
