@@ -1,6 +1,6 @@
 ARG ARCH=
 ARG CORES=2
-FROM ${ARCH}ros:melodic-ros-base
+FROM ${ARCH}ros:melodic-ros-core
 
 LABEL maintainer="Mario Cristovao <mjpc13@protonmail.com>"
 
@@ -18,7 +18,9 @@ RUN apt-get update \
     git \
     wget \
     vim \
-    nano
+    nano \
+    build-essential \
+    libv4l-dev
 
 # Install some python packages
 RUN apt-get -y install \
@@ -36,8 +38,13 @@ RUN pip install pybind11 \
 
 # --- INSTALL MYNT EYE SDK ---
 #Install OpenCV dependencies
-RUN apt-get -y install pkg-config libgtk2.0-dev
-
+#Required
+RUN apt-get -y install pkg-config libgtk2.0-dev libavcodec-dev libavformat-dev libswscale-dev 
+#Optional
+RUN apt-get -y install python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev
+ 
+#Install ssl for https, v4l for video
+RUN apt-get -y install libssl-dev libv4l-dev v4l-utils
 #Install ssl for https, v4l for video
 RUN apt-get -y install libssl-dev libv4l-dev v4l-utils
 
@@ -67,7 +74,8 @@ WORKDIR /root
 RUN apt-get install -y ros-${ROS_DISTRO}-rviz \
     ros-${ROS_DISTRO}-cv-bridge \
     ros-${ROS_DISTRO}-xacro \
-    ros-${ROS_DISTRO}-image-transport-plugins
+    ros-${ROS_DISTRO}-image-transport-plugins \
+    ros-${ROS_DISTRO}-nodelet
 
 #---
 
