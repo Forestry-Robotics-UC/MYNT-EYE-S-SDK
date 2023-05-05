@@ -71,9 +71,9 @@ RUN apt-get -y install libssl-dev libv4l-dev v4l-utils
 WORKDIR /root
 
 #Install ROS Packages
-RUN apt-get install -y ros-${ROS_DISTRO}-rviz \
-    ros-${ROS_DISTRO}-cv-bridge \
+RUN apt-get install -y ros-${ROS_DISTRO}-cv-bridge \
     ros-${ROS_DISTRO}-xacro \
+    ros-${ROS_DISTRO}-tf \
     ros-${ROS_DISTRO}-image-transport-plugins \
     ros-${ROS_DISTRO}-nodelet
 
